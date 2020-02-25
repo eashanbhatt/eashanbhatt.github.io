@@ -108,7 +108,7 @@ analytics:
 # Site Author
 author:
   name             : "Eashan Bhattacharyya"
-  avatar           : "/images/bio-photo.PNG" 
+  avatar           : "/images/bio-pic.PNG" 
   bio              : "Data Science Portfolio"
   location         : "Chicago, IL"
   email            : "eashaninfinity@gmail.com"
