@@ -183,6 +183,12 @@
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  /* Charts */
+  .chart-wrap { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.75rem; box-shadow: var(--shadow); }
+  .chart-label { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 1.25rem; text-align: center; }
+  .radar-center { max-width: 480px; margin: 2.5rem auto 0; }
+  .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+
   /* Responsive */
   @media (max-width: 900px) {
     nav { padding: 1rem 2rem; }
@@ -192,8 +198,10 @@
     .stats-bar { gap: 2rem; }
     .contact-card { padding: 2.5rem 1.5rem; }
     .nav-links { display: none; }
+    .impact-grid { grid-template-columns: 1fr; }
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -373,12 +381,32 @@
     </div>
 
   </div>
+
+  <!-- Skill Radar -->
+  <div class="radar-center reveal" style="transition-delay:0.15s">
+    <div class="chart-wrap">
+      <div class="chart-label">Capability Radar</div>
+      <canvas id="skillRadar" height="290"></canvas>
+    </div>
+  </div>
 </section>
 
 <!-- Projects -->
 <section id="projects">
   <div class="section-tag">Portfolio</div>
   <h2 class="section-title">Featured <span>projects</span></h2>
+  <!-- Impact Dashboard -->
+  <div class="impact-grid reveal">
+    <div class="chart-wrap">
+      <div class="chart-label">Efficiency Gains</div>
+      <canvas id="efficiencyChart" height="170"></canvas>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-label">Cost Impact</div>
+      <canvas id="costChart" height="170"></canvas>
+    </div>
+  </div>
+
   <div class="projects-grid">
 
     <div class="project-card reveal">
@@ -507,6 +535,97 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  /* ── Chart.js defaults ── */
+  Chart.defaults.font.family = "'DM Sans', sans-serif";
+
+  /* Skill Radar */
+  new Chart(document.getElementById('skillRadar'), {
+    type: 'radar',
+    data: {
+      labels: [['Machine', 'Learning'], ['Data', 'Engineering'], ['NLP &', 'Text'], ['Analytics', '& Viz'], 'Optimization', 'Statistics'],
+      datasets: [{
+        data: [93, 87, 90, 89, 80, 89],
+        backgroundColor: 'rgba(26,86,219,0.1)',
+        borderColor: '#1a56db',
+        borderWidth: 2,
+        pointBackgroundColor: '#1a56db',
+        pointHoverBackgroundColor: '#d94f00',
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        r: {
+          min: 65, max: 100,
+          ticks: { stepSize: 10, display: false },
+          grid: { color: 'rgba(26,86,219,0.08)' },
+          angleLines: { color: 'rgba(26,86,219,0.1)' },
+          pointLabels: { font: { size: 11 }, color: '#64748b' }
+        }
+      }
+    }
+  });
+
+  /* Efficiency Gains */
+  new Chart(document.getElementById('efficiencyChart'), {
+    type: 'bar',
+    data: {
+      labels: [['Load Planning', 'Time'], ['Campaign', 'Delivery'], ['DB Query', 'Speed']],
+      datasets: [{
+        data: [75, 40, 15],
+        backgroundColor: ['rgba(26,86,219,0.82)', 'rgba(26,86,219,0.65)', 'rgba(26,86,219,0.45)'],
+        borderRadius: 5,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.raw}% faster` } }
+      },
+      scales: {
+        x: {
+          max: 100,
+          grid: { color: 'rgba(26,86,219,0.06)' },
+          ticks: { font: { size: 10 }, color: '#94a3b8', callback: v => v + '%' }
+        },
+        y: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#64748b' } }
+      }
+    }
+  });
+
+  /* Cost Impact */
+  new Chart(document.getElementById('costChart'), {
+    type: 'bar',
+    data: {
+      labels: [['Tool Replacement', '(annual)'], ['Operational', '(monthly)']],
+      datasets: [{
+        data: [320, 110],
+        backgroundColor: ['rgba(217,79,0,0.78)', 'rgba(217,79,0,0.52)'],
+        borderRadius: 5,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` $${ctx.raw}k` } }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(217,79,0,0.06)' },
+          ticks: { font: { size: 10 }, color: '#94a3b8', callback: v => '$' + v + 'k' }
+        },
+        y: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#64748b' } }
+      }
+    }
+  });
 </script>
 </body>
 </html>
