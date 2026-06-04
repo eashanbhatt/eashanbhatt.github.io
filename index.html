@@ -423,12 +423,14 @@
     <div class="project-card reveal" style="transition-delay:0.1s">
       <div class="project-header">
         <div class="project-icon">🚛</div>
-        <div class="project-links"><a href="https://github.com/eashanbhatt" class="project-link" target="_blank">GitHub ↗</a></div>
+        <div class="project-links">
+          <a href="https://github.com/eashanbhatt/truck-planning-system" class="project-link" target="_blank">GitHub ↗</a>
+        </div>
       </div>
-      <div class="project-name">Truck Load Planning Optimizer</div>
-      <div class="project-desc">Replaced a $320k/yr third-party tool (Mercury Gate) with an in-house Python system. Uses KMeans + hierarchical clustering to plan TL/LTL shipments. Linear optimizer cut planning time from 2 hrs to 30 mins.</div>
-      <div class="project-impact">$320k/yr saved · $110k/month operational savings</div>
-      <div class="project-tags"><span class="project-tag">KMeans</span><span class="project-tag">PuLP</span><span class="project-tag">Pandas</span><span class="project-tag">Optimization</span></div>
+      <div class="project-name">Truck Load Planning System</div>
+      <div class="project-desc">Replaced a $320k/yr third-party tool (Mercury Gate) with two independent Python solutions. <strong>Module 1</strong> uses a haversine + bearing composite distance matrix with Agglomerative Clustering to group shipments into geographic lanes. <strong>Module 2</strong> solves a MILP (PuLP + CBC) per US region to minimise total TL/LTL freight cost. Both output a full load plan CSV and tiered savings summary.</div>
+      <div class="project-impact">$320k/yr saved · $110k/month operational savings · 62–68% freight cost reduction</div>
+      <div class="project-tags"><span class="project-tag">Haversine</span><span class="project-tag">Bearing</span><span class="project-tag">AgglomerativeClustering</span><span class="project-tag">MILP</span><span class="project-tag">PuLP</span><span class="project-tag">Optimization</span></div>
     </div>
 
     <div class="project-card reveal" style="transition-delay:0.2s">
